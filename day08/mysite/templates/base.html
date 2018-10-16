@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人博客--{% block title %}首页{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'js/lib/bootstrap-3.3.7-dist/css/bootstrap.css' %}">
+
+     <link rel="stylesheet" href="/static/js/js/lib/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/static/js/lib/jquery2.2.4/jquery-2.2.4.min.js"></script>
+    <script src="/static/js/lib/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+
+
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <!--<a class="navbar-brand" href="/blog/index/">博客首页面</a>-->
+            <a class="navbar-brand" href="{% url 'blog:index' %}">博客首页面</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+
+                {% if request.session.loginUser %}
+                    <li class="active">
+                        欢迎您{{ request.session.loginUser.nickname }}
+                        登录我们的系统
+                    </li>
+
+                    <li class="active"><a href="{% url 'blog:logout' %}">退出</a></li>
+                    <li><a href="{% url 'blog:reg' %}">注册</a></li>
+                {% else %}
+                    <li class="active"><a href="{% url 'blog:login' %}">登录</a></li>
+                    <li><a href="{% url 'blog:reg' %}">注册</a></li>
+                {% endif %}
+
+            </ul>
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="用户信息">
+                </div>
+                <button type="submit" class="btn btn-default">查询</button>
+            </form>
+
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="container">
+    <div class="row">
+        <!-- 轮播图 -->
+        <div class="col-md-8">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <img src="/static/img/a.jpg" alt="...">
+                        <div class="carousel-caption">
+
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="/static/img/b.jpg" alt="...">
+                        <div class="carousel-caption">
+
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="/static/img/c.1.jpg" alt="...">
+                    </div>
+                    <div class="item">
+                        <img src="/static/img/c.png" alt="...">
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">上一张</span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">下一张</span>
+                </a>
+            </div>
+        </div>
+ <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">博客推介</div>
+                <div class="panel-body">
+                    <p>
+                        OpenAI <br /><br />
+                        人工智能  :https://arxiv.org/list/cs.AI/recent...<br /><br />
+                        自然及进化计算:https://arxiv.org/list/cs.NE/recent...<br /><br />
+                        学习：https://arxiv.org/list/cs.LG/recent...<br /><br />
+                        复旦大学人工实验室： ai.stanford.edu/<br /><br />
+                        ......................<br /><br />
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--雪花特效-->
+<script>
+
+(function($){$.fn.snow=function(options){var $flake=$('<div id="flake" />').css({'position':'absolute','top':'-50px'}).html('&#10052;'),documentHeight=$(document).height(),documentWidth=$(document).width(),defaults={minSize:10,maxSize:20,newOn:500,flakeColor:"#FFFFFF"},options=$.extend({},defaults,options);var interval=setInterval(function(){var startPositionLeft=Math.random()*documentWidth-100,startOpacity=0.5+Math.random(),sizeFlake=options.minSize+Math.random()*options.maxSize,endPositionTop=documentHeight-40,endPositionLeft=startPositionLeft-100+Math.random()*200,durationFall=documentHeight*10+Math.random()*5000;$flake.clone().appendTo('body').css({left:startPositionLeft,opacity:startOpacity,'font-size':sizeFlake,color:options.flakeColor}).animate({top:endPositionTop,left:endPositionLeft,opacity:0.2},durationFall,'linear',function(){$(this).remove()});},options.newOn);};})(jQuery);
+
+$.fn.snow({ minSize: 5, maxSize: 50, newOn: 1000, flakeColor: '#FFF' });
+
+</script>
+
+<div class="container">
+    <div class="a">
+        <!-- 轮播图 -->
+        <div class="col-md-8">
+            <div class="panel panel-primary">
+
+            {% block content %}
+                <div class="panel-heading">所有用户</div>
+                  <div class="panel-body">
+
+                  </div>
+                </div>
+            {% endblock %}
+        </div>
+    </div>
+
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+
+              {% block right %}
+              <div class="panel-heading">博主信息</div>
+                <ul class="list-group">
+                  <li class="list-group-item" style="text-align: center">
+                      <img src="/{{request.session.loginUser.header}}" width="100" height="100" alt="..." class="img-circle">
+                  </li>
+                  <li class="list-group-item">
+                      <a href="{% url 'blog:index' %}">首页</a>
+                  </li>
+                  <li class="list-group-item">
+                      <a href="{% url 'blog:list_user' %}">查看所有用户</a>
+                  </li>
+                  <li class="list-group-item">
+                     <a href="/blog/show_article/">查看所有文章</a>
+                  </li>
+                  <li class="list-group-item">
+                      <a href="{% url 'blog:add_article' %}">发表文章</a>
+                  </li>
+                  <li class="list-group-item">
+                      <a href="{% url 'blog:reg' %}">注册</a>
+                  </li>
+                  <li class="list-group-item">
+                      <a href="{% url 'blog:login' %}">登录</a>
+                  </li>
+                </ul>
+
+                {% endblock %}
+            </div>
+        </div>
+
+
+<!--
+    网页页脚- 网站备案信息+友情链接
+-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="list-inline">
+                <li><a href="https://www.jianshu.com/" class="text-muted">简书</a></li>
+                <li><a href="https://www.csdn.net/" class="text-muted">CSDN</a></li>
+                <li><a href="https://www.baidu.com" class="text-muted">百度一下</a></li>
+                <li><a href="https://www.so.com/" class="text-muted">360搜</a></li>
+                <li><a href="http://blog.sohu.com/" class="text-muted">搜狐博客</a></li>
+                <li><a href="#" class="text-muted">新浪微博</a></li>
+                <li><a href="https://weibo.com/" class="text-muted">天涯论坛</a></li>
+                <li><a href="https://bibi.com/" class="text-muted">哔哩哔哩</a></li>
+                <li><a href="https://zhihu.com/" class="text-muted">知乎</a></li>
+                <li><a href="http://www.qq.com/" class="text-muted">腾讯网</a></li>
+            </ul>
+        </div>
+    </div>
+   <div class="footer">
+<div class="foot_link">
+        <a href="#">关于我们</a>
+        <span>|</span>
+       <a href="#">联系我们</a>
+        <span>|</span>
+     <a href="#">招聘人才</a>
+       <span>|</span>
+        <a href="#">友情链接</a><p>CopyRight All Rights Reserved   电话：010-****888 京ICP备*******8号</p>
+
+
+   </div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title%}
+    发表文章
+{% endblock%}
+
+{% block content %}
+
+<div class="panel panel-primary">
+      <div class="panel-heading">
+          <h5>发表文章</h5>
+      </div>
+
+      <div class="panel-body">
+        <div style="color: red;">{{msg}}</div>
+        <form class="form-horizontal" action="/blog/add_article/" method="post">
+
+                {% csrf_token %}
+              <div class="form-group">
+                <div class="col-md-10 col-md-offset-1">
+                  <input type="text" class="form-control" name="title" id="title" placeholder="请输入文章的标题">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                    <textarea class="col-md-10 col-md-offset-1" name="content" id="content" cols="30" rows="20"></textarea>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button type="submit" class="btn btn-danger">发表文章</button>
+                </div>
+              </div>
+        </form>
+
+
+      </div>
+    </div>
+<script type="text/javascript">
+    var id_content = UE.getEditor('conten',{
+        'initialFrameWidth': 600,
+        'initialFrameHeight': 300,
+        'serverUrl': '/ueditor/controller/?imagePathFormat=&filePathFormat='
+    });
+</script>
+{% endblock%}

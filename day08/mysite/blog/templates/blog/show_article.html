@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人博客--{% block title %}首页{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'js/lib/bootstrap-3.3.7-dist/css/bootstrap.css' %}">
+
+     <link rel="stylesheet" href="/static/js/js/lib/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/static/js/lib/jquery2.2.4/jquery-2.2.4.min.js"></script>
+    <script src="/static/js/lib/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <!--<a class="navbar-brand" href="/blog/index/">博客首页面</a>-->
+            <a class="navbar-brand" href="{% url 'blog:index' %}">博客首页面</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+
+                {% if request.session.loginUser %}
+                    <li class="active">
+                        欢迎您{{ request.session.loginUser.nickname }}
+                        登录我们的系统
+                    </li>
+
+                    <li class="active"><a href="{% url 'blog:logout' %}">退出</a></li>
+                    <li><a href="{% url 'blog:reg' %}">注册</a></li>
+                {% else %}
+                    <li class="active"><a href="{% url 'blog:login' %}">登录</a></li>
+                    <li><a href="{% url 'blog:reg' %}">注册</a></li>
+                {% endif %}
+
+            </ul>
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="用户信息">
+                </div>
+                <button type="submit" class="btn btn-default">查询</button>
+            </form>
+
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div style="color: #0f0f0f;"><h4>{{msg}}</h4></div>
+<div class="presentation ">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+             <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">文章展示</h3>
+                  </div>
+                  <table class="table">
+                          <div style="color: red;">{{msg}}</div>
+                          <div class="panel-footer">
+                                  <div class="table-responsive">
+                                        <table class="table table-hover">
+
+                                                <thead>
+                                                    <tr>
+                                                        <td>文章编号</td>
+                                                        <td>文章标题</td>
+                                                        <td>文章内容摘要</td>
+                                                        <td>文章作者</td>
+                                                        <td>创作时间</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for art in article %}
+                                                        <tr>
+                                                            <td>{{ forloop.counter0 }}</td>
+                                                            <td>{{ art.title | truncatechars:30 }}</td>
+                                                            <td>{{ art.content | truncatechars:20 }}</td>
+                                                            <td>{{ art.author.username }}</td>
+                                                            <td>{{ art.publishTime }}</td>
+                                                            <td><a onclick="return window.confirm('您确定此操作，此操作是危险操作')" href="/blog/del_article/?id={{art.id}}">删除</a></td>
+                                                            <td><a href="/blog/{{art.id}}/update_article/">修改</a></td>
+                                                            <td><a href="/blog/{{art.id}}/show_user_article/">查看详细</a></td>
+                                                        </tr>
+                                                        {% empty %}
+                                                        <tr>
+                                                         <td colspan="6">对不起，没有文章</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                </tbody>
+                                        </table>
+                                  </div>
+                          </div>
+                  </table>
+             </div>
+        </div>
+    </div>
+</div>
+
+
+<!--
+    网页页脚- 网站备案信息+友情链接
+-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="list-inline">
+                <li><a href="https://www.jianshu.com/" class="text-muted">简书</a></li>
+                <li><a href="https://www.csdn.net/" class="text-muted">CSDN</a></li>
+                <li><a href="https://www.baidu.com" class="text-muted">百度一下</a></li>
+                <li><a href="https://www.so.com/" class="text-muted">360搜</a></li>
+                <li><a href="http://blog.sohu.com/" class="text-muted">搜狐博客</a></li>
+                <li><a href="#" class="text-muted">新浪微博</a></li>
+                <li><a href="https://weibo.com/" class="text-muted">天涯论坛</a></li>
+                <li><a href="https://bibi.com/" class="text-muted">哔哩哔哩</a></li>
+                <li><a href="https://zhihu.com/" class="text-muted">知乎</a></li>
+                <li><a href="http://www.qq.com/" class="text-muted">腾讯网</a></li>
+            </ul>
+        </div>
+    </div>
+   <div class="footer">
+<div class="foot_link">
+        <a href="#">关于我们</a>
+        <span>|</span>
+       <a href="#">联系我们</a>
+        <span>|</span>
+     <a href="#">招聘人才</a>
+       <span>|</span>
+        <a href="#">友情链接</a><p>CopyRight All Rights Reserved   电话：010-****888 京ICP备*******8号</p>
+
+
+   </div>
+</div>
+</body>
+</html>
