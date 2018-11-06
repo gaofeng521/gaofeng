@@ -1,1 +1,42 @@
 
+import urllib
+import urllib.request
+import re
+
+#响应头
+headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36'}
+
+
+# 打开网页，下载器
+def open_html(url):
+    require = urllib.request.Request(url,headers=headers)
+    reponse = urllib.request.urlopen(require)
+    html = reponse.read()
+    return html
+
+
+# 下载图片
+def load_image(html):
+    regx = 'http://[\S]*jpg'
+    pattern = re.compile(regx)
+    get_image = re.findall(pattern, repr(html))
+
+    num = 1
+    for img in get_image:
+        photo = open_html(img)
+
+        with open(r'H:\爬虫项目\优酷视频网站图片\%s.png' % num, 'wb') as f:
+            print('开始下载图片')
+            f.write(photo)
+            print('正在下载第%s张图片' % num)
+            f.close()
+        num = num + 1
+    if num > 1:
+        print('下载成功！！！')
+    else:
+        print('下载失败！！！')
+
+
+url = 'http://www.qiqipu.com/'
+html = open_html(url)
+load_image(html)
